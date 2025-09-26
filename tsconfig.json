@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "ES2017",
+    "target": "esnext",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
@@ -13,10 +13,23 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "forceConsistentCasingInFileNames": true,
     "paths": {
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": [
+    "next-env.d.ts",
+    "*.ts",
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "data/**/*.ts",
+    "data/**/*.tsx",
+    "prisma/**/*.ts",
+    "prisma/**/*.tsx",
+    ".eslintrc.js"
+  ],
   "exclude": ["node_modules"]
 }
