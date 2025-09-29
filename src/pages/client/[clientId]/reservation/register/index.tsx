@@ -3,7 +3,7 @@ import { ReactElement } from "react";
 import { Role } from "@prisma/client";
 import { getSessionProtectedRedirects } from "@/common/utils/pagesRedirect";
 import { BackOfficeLayout } from "@/frontend/backOffice/layouts/BackOfficeLayout";
-import ReservationDashboard from "@/frontend/client/components/ReservationDashboard";
+import { CreateReservation } from "@/frontend/client/components/CreateReservation";
 
 type ClientIndexRouteProps = InferGetServerSidePropsType<
   typeof getServerSideProps
@@ -22,14 +22,14 @@ export const getServerSideProps = async (
   };
 };
 
-function ClientReservationsIndexRoute() {
-  return <ReservationDashboard />;
+function CreateClientReservationIndexRoute() {
+  return <CreateReservation />;
 }
 
-ClientReservationsIndexRoute.getLayout = function getLayout(
+CreateClientReservationIndexRoute.getLayout = function getLayout(
   page: ReactElement<ClientIndexRouteProps>,
 ) {
   return <BackOfficeLayout>{page}</BackOfficeLayout>;
 };
 
-export default ClientReservationsIndexRoute;
+export default CreateClientReservationIndexRoute;

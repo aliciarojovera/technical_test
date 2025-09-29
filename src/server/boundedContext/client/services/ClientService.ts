@@ -1,6 +1,10 @@
 import { Prisma } from "@prisma/client";
 import { prismaSingleton } from "@/server/boundedContext";
-import { ClientInput, ClientReservationsInput } from "./ClientServiceInterface";
+import {
+  ClientInput,
+  ClientReservationsInput,
+  CreateClientReservationInput,
+} from "./ClientServiceInterface";
 
 export class ClientService {
   constructor(protected readonly prisma = prismaSingleton) {}
@@ -46,9 +50,7 @@ export class ClientService {
           }
         : {}),
       // filtro por formato
-      ...(clientData.format
-        ? { format: clientData.format as "SEATED" | "COCKTAIL" }
-        : {}),
+      ...(clientData.format ? { format: clientData.format } : {}),
       ...(clientData.status ? { reservationStatus: clientData.status } : {}),
       ...(clientData.myReservationsOnly && clientData.userId
         ? { userId: clientData.userId }
@@ -91,5 +93,33 @@ export class ClientService {
       },
     });
     return { totalCount, reservations };
+  }
+  async createClientReservation(clientData: CreateClientReservationInput) {
+    // check if the user belongs to the client
+    const client = await this.prisma.client.findFirst({
+      where: {
+        id: clientData.id,
+        User: {
+          some: {
+            id: clientData.userId,
+          },
+        },
+      },
+    });
+    if (!client) {
+      throw new Error("No tienes permiso para acceder a este cliente.");
+    }
+    const newReservation = await this.prisma.reservation.create({
+      data: {
+        reservationName: clientData.name,
+        pax: clientData.pax,
+        reservationDate: clientData.reservationDate,
+        format: clientData.format,
+        reservationStatus: "INITIAL_STATUS",
+        clientId: clientData.id,
+        userId: clientData.userId!,
+      },
+    });
+    return newReservation;
   }
 }

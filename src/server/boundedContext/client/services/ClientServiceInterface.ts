@@ -14,3 +14,13 @@ export interface ClientReservationsInput {
   myReservationsOnly?: boolean;
   userId?: string;
 }
+
+export interface CreateClientReservationInput {
+  id: string;
+  name: string;
+  format: ReservationFormat;
+  myReservationsOnly?: boolean;
+  userId?: string;
+  pax: number;
+  reservationDate: Date;
+}

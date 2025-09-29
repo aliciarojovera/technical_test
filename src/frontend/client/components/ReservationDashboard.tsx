@@ -1,6 +1,7 @@
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import { useSession } from "next-auth/react";
+import Link from "next/link";
 import { api, RouterInputs } from "@/common/apiConnectors/browser";
 import { Loader } from "@/frontend/common/UI/Loader";
 import { Pagination } from "@/frontend/common/UI/PaginationInput";
@@ -19,16 +20,17 @@ const colorMap = {
 };
 
 function ReservationDashboard() {
-  const { register, watch, setValue } = useForm<ReservationFiltersInputs>({
-    defaultValues: {
-      itemsPerPage: 5,
-      page: 1,
-      name: "",
-      format: undefined,
-      status: undefined,
-      myReservationsOnly: false,
-    },
-  });
+  const { register, watch, setValue, reset } =
+    useForm<ReservationFiltersInputs>({
+      defaultValues: {
+        itemsPerPage: 5,
+        page: 1,
+        name: "",
+        format: undefined,
+        status: undefined,
+        myReservationsOnly: false,
+      },
+    });
   const router = useRouter();
 
   const { clientId } = router.query;
@@ -74,6 +76,29 @@ function ReservationDashboard() {
 
   return (
     <section className="flex h-full w-full flex-col items-center gap-y-6 px-[5%] py-10">
+      <div className="flex w-full flex-row items-center justify-end">
+        <button
+          onClick={() => {
+            reset({
+              itemsPerPage: 5,
+              page: 1,
+              name: "",
+              format: undefined,
+              status: undefined,
+              myReservationsOnly: false,
+            });
+          }}
+          className="mr-4 rounded bg-gray-200 px-4 py-2 text-center text-gray-700 transition hover:bg-gray-300"
+        >
+          Reset Filters
+        </button>
+        <Link
+          href={`/client/${clientId as string}/reservation/register`}
+          className="hover:bg-main-blue bg-blue-medium inline-block rounded px-4 py-2 text-center text-white transition"
+        >
+          Crear reserva
+        </Link>
+      </div>
       <h1 className="text-2xl font-bold uppercase">Reservas</h1>
       <ReservationFilters
         register={register}

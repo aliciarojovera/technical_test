@@ -7,7 +7,10 @@ import { RouterInputs } from "@/common/apiConnectors/browser";
 import { GeneralSwitch } from "@/frontend/common/UI/GeneralSwitch";
 import { GeneralDropdown } from "@/frontend/common/UI/GeneralDropdown";
 import { GeneralInput } from "@/frontend/common/UI/GeneralInput";
-import { formatOptions, statusOptions } from "@/common/utils/constants";
+import {
+  formatOptionsWithAll,
+  statusOptionsWithAll,
+} from "@/common/utils/constants";
 
 type ReservationFiltersInputs = RouterInputs["client"]["getClientReservations"];
 interface ReservationFiltersProps {
@@ -38,8 +41,9 @@ export function ReservationFilters({
           id="status"
           label="Filtrar por estado"
           placeholder="Todos"
+          value={watch("status") ?? ""}
           register={register("status")}
-          options={statusOptions}
+          options={statusOptionsWithAll}
         />
       </div>
       <div className="w-full md:w-1/2 lg:w-1/4">
@@ -47,8 +51,9 @@ export function ReservationFilters({
           id="format"
           label="Filtrar por formato"
           placeholder="Todos"
+          value={watch("format") ?? ""}
           register={register("format")}
-          options={formatOptions}
+          options={formatOptionsWithAll}
         />
       </div>
       <div className="w-full md:w-1/2 lg:w-1/4">
