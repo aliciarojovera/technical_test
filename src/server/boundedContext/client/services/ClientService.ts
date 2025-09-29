@@ -40,7 +40,6 @@ export class ClientService {
   async getClientReservations(clientData: ClientReservationsInput) {
     const whereClientClause: Prisma.ReservationWhereInput = {
       clientId: clientData.id,
-      // filtro por nombre de reserva
       ...(clientData.name
         ? {
             reservationName: {
@@ -49,7 +48,6 @@ export class ClientService {
             },
           }
         : {}),
-      // filtro por formato
       ...(clientData.format ? { format: clientData.format } : {}),
       ...(clientData.status ? { reservationStatus: clientData.status } : {}),
       ...(clientData.myReservationsOnly && clientData.userId
@@ -57,7 +55,6 @@ export class ClientService {
         : {}),
     };
 
-    // check if the user belongs to the client
     const client = await this.prisma.client.findFirst({
       where: {
         id: clientData.id,
@@ -71,7 +68,6 @@ export class ClientService {
     if (!client) {
       throw new Error("No tienes permiso para acceder a este cliente.");
     }
-    // add total count for pagination
     const totalCount = await this.prisma.reservation.count({
       where: whereClientClause,
     });
@@ -95,7 +91,6 @@ export class ClientService {
     return { totalCount, reservations };
   }
   async createClientReservation(clientData: CreateClientReservationInput) {
-    // check if the user belongs to the client
     const client = await this.prisma.client.findFirst({
       where: {
         id: clientData.id,

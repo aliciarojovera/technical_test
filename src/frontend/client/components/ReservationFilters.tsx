@@ -39,7 +39,7 @@ export function ReservationFilters({
       <div className="w-full md:w-1/2 lg:w-1/4">
         <GeneralDropdown
           id="status"
-          label="Filtrar por estado"
+          label="Filtrar por estatus"
           placeholder="Todos"
           value={watch("status") ?? ""}
           register={register("status")}

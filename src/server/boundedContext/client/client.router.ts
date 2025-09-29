@@ -15,7 +15,7 @@ const createClientReservation = new CreateClientReservation();
 
 // MARK: DTOs
 const getClientDTO = z.object({
-  id: z.string().uuid(),
+  id: z.uuid(),
 });
 
 const getClientReservationsDTO = z.object({
@@ -30,12 +30,12 @@ const getClientReservationsDTO = z.object({
 });
 
 export const createClientReservationDTO = z.object({
-  id: z.string().uuid(),
+  id: z.uuid(),
   name: z.string().min(1).max(100),
   format: z.enum(ReservationFormat),
   pax: z.number().min(1).max(20),
   reservationDate: z.date(),
-  userId: z.string().uuid(),
+  userId: z.uuid(),
 });
 
 // MARK: Router

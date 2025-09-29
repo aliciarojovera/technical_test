@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useSession } from "next-auth/react";
 import { FieldErrors, useForm } from "react-hook-form";
 import { useRouter } from "next/router";
+import Link from "next/link";
 import { api, RouterInputs } from "@/common/apiConnectors/browser";
 import { GeneralInput } from "@/frontend/common/UI/GeneralInput";
 import { GeneralDropdown } from "@/frontend/common/UI/GeneralDropdown";
@@ -71,9 +72,14 @@ function CreateReservation() {
   };
 
   return (
-    <section className="text-blue-darkest flex w-full flex-col gap-y-12 px-[5%] py-10">
-      <h1 className="text-left text-xl">Crear reserva</h1>
-
+    <section className="text-blue-darkest flex h-full w-full flex-col gap-y-6 px-[5%] py-10">
+      <Link
+        href={`/client/${clientId as string}/reservation`}
+        className="text-left"
+      >
+        ← Volver{" "}
+      </Link>
+      <h1 className="text-2xl font-bold uppercase">Crear reserva</h1>
       <div className="grid w-full grid-cols-1 gap-4 md:grid-cols-2">
         <GeneralInput
           label="Nombre de la reserva"
@@ -85,7 +91,6 @@ function CreateReservation() {
             minLength: { value: 1, message: "Debe tener al menos 1 carácter" },
           })}
         />
-
         <GeneralInput
           label="Número de personas"
           id="reservation-pax"
@@ -96,7 +101,6 @@ function CreateReservation() {
             min: { value: 1, message: "Debe ser al menos 1 persona" },
           })}
         />
-
         <GeneralInput
           label="Fecha y hora de la reserva"
           id="reservation-date"
@@ -107,7 +111,6 @@ function CreateReservation() {
             required: "La fecha y hora son obligatorias",
           })}
         />
-
         <GeneralDropdown
           id="reservation-format"
           label="Formato de la reserva"
@@ -120,7 +123,6 @@ function CreateReservation() {
           generalInputContainer="w-full"
         />
       </div>
-
       <div className="flex w-full">
         <button
           onClick={handleSubmit(onSubmit, onError)}
