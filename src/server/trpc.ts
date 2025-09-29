@@ -1,6 +1,6 @@
 import { initTRPC, TRPCError } from "@trpc/server";
 import { type CreateNextContextOptions } from "@trpc/server/adapters/next";
-import { ZodError, treeifyError, flattenError, formatError } from "zod";
+import { ZodError, flattenError } from "zod";
 import superjson from "superjson";
 import { getServerAuthSession } from "@/server";
 
@@ -108,6 +108,7 @@ export const clientTRPCProcedure = trpc.procedure.use(({ ctx, next }) => {
       message: "Only Clients can access this route",
     });
   }
+  // tbd: añadir el check de que el user pertenece al cliente
   return next({
     ctx: {
       ...ctx,

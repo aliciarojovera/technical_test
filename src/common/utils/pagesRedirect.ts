@@ -6,6 +6,9 @@ export function redirectByRole(role: Role) {
   if (role === Role.ADMIN) {
     return "/backOffice";
   }
+  if (role === Role.CLIENT) {
+    return "/client";
+  }
   return "/not-authorized";
 }
 
